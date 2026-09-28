@@ -1,8 +1,30 @@
 # Онбординг Sales Doctor — инструкция для руководителя
 
-Это инструкция «как пользоваться» для тебя как админа. Техническую
-документацию для разработки смотри в [CLAUDE.md](CLAUDE.md), инструкцию
-по деплою — в [DEPLOY.md](DEPLOY.md).
+Это инструкция «как пользоваться» для тебя как админа. Если ты разработчик
+и получил этот репозиторий на ревью/деплой — начни с [HANDOFF.md](HANDOFF.md)
+(с чего начать, что почитать по порядку) и раздела «Установка для
+разработчика» ниже. Техническая документация — в [CLAUDE.md](CLAUDE.md),
+инструкция по деплою — в [DEPLOY.md](DEPLOY.md).
+
+## Установка для разработчика
+
+```bash
+git clone <адрес этого репозитория>
+cd ibox-onboarding
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+python manage.py migrate
+python manage.py seed_demo_data   # тестовые данные, не боевые
+python manage.py test             # 113 тестов, должны пройти все
+python manage.py runserver
+```
+Админка на локальном запуске: `http://127.0.0.1:8000/admin/` (`admin` /
+`admin12345` — только для локальной тестовой базы). Реальные данные курса
+в репозиторий не входят — передаются отдельно, см. [HANDOFF.md](HANDOFF.md).
+
+Дальше — деплой на сервер, см. [DEPLOY.md](DEPLOY.md) (Docker на своём VPS
+или Render/Railway).
 
 ## ⚠️ Важно: сначала задеплой
 
