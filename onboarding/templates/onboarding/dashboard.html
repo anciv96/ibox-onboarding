@@ -1,0 +1,326 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Мой прогресс" %} — iBox{% endblock %}
+{% block content %}
+<div class="space-y-6">
+
+    {# ── Приветствие + кольцо прогресса ─────────────────────────────── #}
+    <section class="overflow-hidden rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 text-white shadow-sm dark:from-brand-700 dark:to-brand-900">
+        <div class="flex flex-col-reverse gap-6 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+            <div class="min-w-0">
+                <p class="text-sm font-medium text-brand-100">
+                    {% blocktrans with n=d.days_in_course %}День {{ n }} обучения{% endblocktrans %}
+                </p>
+                <h1 class="mt-1 text-2xl font-semibold text-white sm:text-3xl">
+                    {% blocktrans with name=student.user.first_name|default:student.user.username %}Привет, {{ name }}!{% endblocktrans %}
+                </h1>
+                <p class="mt-2 max-w-md text-brand-100">
+                    {% if d.final_state == 'approved' %}{% trans "Обучение завершено — вы допущены к работе. Поздравляем!" %}
+                    {% elif d.final_state == 'pending_review' %}{% trans "Финальный тест отправлен. Осталось дождаться решения руководителя." %}
+                    {% elif d.current_module %}{% blocktrans with title=d.current_module.l_title %}Следующий шаг — «{{ title }}».{% endblocktrans %}
+                    {% elif d.can_take_final %}{% trans "Все модули пройдены. Осталось сдать финальный тест." %}
+                    {% else %}{% trans "Здесь собраны ваш путь обучения, результаты и история." %}{% endif %}
+                </p>
+                <div class="mt-5 flex flex-wrap gap-3">
+                    {% if d.current_module %}
+                    <a href="{% url 'onboarding:module_detail' d.current_module.pk %}" class="btn-light">
+                        {% if d.modules_done %}{% trans "Продолжить обучение" %}{% else %}{% trans "Начать обучение" %}{% endif %}
+                        {% include "partials/icon.html" with name="arrow" class="h-4 w-4" %}
+                    </a>
+                    {% elif d.can_take_final %}
+                    <a href="{% url 'finaltest:take' %}" class="btn-light">
+                        {% if d.has_open_submission %}{% trans "Продолжить тест" %}{% elif d.final_state == 'needs_rework' %}{% trans "Пересдать финальный тест" %}{% else %}{% trans "Начать финальный тест" %}{% endif %}
+                        {% include "partials/icon.html" with name="arrow" class="h-4 w-4" %}
+                    </a>
+                    {% endif %}
+                </div>
+
+                <div class="mt-6 max-w-md">
+                    <div class="flex flex-wrap items-baseline justify-between gap-x-3 text-sm">
+                        <span class="inline-flex items-center gap-1.5 font-semibold text-white">
+                            {% include "partials/icon.html" with name="bolt" class="h-4 w-4" %}
+                            {{ d.game.rank_name }} · <span data-nav-xp-copy>{{ d.game.xp }}</span> XP
+                        </span>
+                        <span class="text-xs text-brand-100">
+                            {% if d.game.is_top_rank %}{% trans "максимальный ранг" %}{% else %}{% blocktrans with n=d.game.xp_to_next r=d.game.next_rank_name %}до ранга «{{ r }}»: {{ n }} XP{% endblocktrans %}{% endif %}
+                        </span>
+                    </div>
+                    <div class="mt-1.5 h-2 overflow-hidden rounded-full bg-white/25">
+                        <div class="h-2 rounded-full bg-white transition-all" style="width: {{ d.game.rank_percent }}%"></div>
+                    </div>
+                    {% if d.game.streak %}
+                    <p class="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">
+                        {% include "partials/icon.html" with name="flame" class="h-3.5 w-3.5" %}
+                        {% blocktrans count n=d.game.streak %}Серия: {{ n }} день подряд{% plural %}Серия: {{ n }} дней подряд{% endblocktrans %}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="relative mx-auto h-36 w-36 shrink-0 sm:mx-0" role="img"
+                 aria-label="{% blocktrans with p=d.percent %}Прогресс курса: {{ p }}%{% endblocktrans %}">
+                <svg viewBox="0 0 120 120" class="h-full w-full -rotate-90">
+                    <circle cx="60" cy="60" r="52" fill="none" stroke-width="10" class="stroke-white/25"/>
+                    <circle cx="60" cy="60" r="52" fill="none" stroke-width="10" stroke-linecap="round"
+                            class="stroke-white" stroke-dasharray="{{ d.ring }} 327"/>
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                    <span class="text-3xl font-semibold text-white">{{ d.percent }}%</span>
+                    <span class="text-xs text-brand-100">{% trans "курса пройдено" %}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# ── Статистика ─────────────────────────────────────────────────── #}
+    <section class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        <div class="card p-4">
+            <div class="muted flex items-center gap-2 text-sm">{% include "partials/icon.html" with name="book" %} {% trans "Модулей пройдено" %}</div>
+            <p class="heading mt-2 text-2xl font-semibold">{{ d.modules_done }}<span class="muted text-base font-normal"> / {{ d.modules_total }}</span></p>
+        </div>
+        <div class="card p-4">
+            <div class="muted flex items-center gap-2 text-sm">{% include "partials/icon.html" with name="chart" %} {% trans "Точность ответов" %}</div>
+            <p class="heading mt-2 text-2xl font-semibold">{% if d.accuracy is not None %}{{ d.accuracy }}%{% else %}—{% endif %}</p>
+            <p class="muted mt-0.5 text-xs">{% trans "по всем попыткам" %}</p>
+        </div>
+        <div class="card p-4">
+            <div class="muted flex items-center gap-2 text-sm">{% include "partials/icon.html" with name="bolt" %} {% trans "С первой попытки" %}</div>
+            <p class="heading mt-2 text-2xl font-semibold">{{ d.first_try_count }}<span class="muted text-base font-normal"> / {{ d.modules_total }}</span></p>
+            <p class="muted mt-0.5 text-xs">{% blocktrans with n=d.attempts_total %}всего попыток: {{ n }}{% endblocktrans %}</p>
+        </div>
+        <div class="card p-4">
+            <div class="muted flex items-center gap-2 text-sm">{% include "partials/icon.html" with name="calendar" %} {% trans "Дней в обучении" %}</div>
+            <p class="heading mt-2 text-2xl font-semibold">{{ d.days_in_course }}</p>
+            <p class="muted mt-0.5 text-xs">{% blocktrans with date=d.started_at|date:"j E" %}старт: {{ date }}{% endblocktrans %}</p>
+        </div>
+    </section>
+
+    <div class="grid gap-6 lg:grid-cols-3">
+
+        {# ── Путь обучения ──────────────────────────────────────────── #}
+        <section class="card p-5 sm:p-6 lg:col-span-2">
+            <h2 class="heading text-lg font-semibold">{% trans "Путь обучения" %}</h2>
+            <p class="muted mb-5 text-sm">{% trans "Модули открываются по порядку — следующий доступен после верных ответов на все вопросы." %}</p>
+
+            <ol>
+                {% for row in d.rows %}
+                <li class="relative flex gap-4 pb-6">
+                    <span class="absolute left-[17px] top-9 h-[calc(100%-2.25rem)] w-px bg-gray-200 dark:bg-gray-800"></span>
+                    {% if row.state == 'done' %}
+                    <span class="z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400">{% include "partials/icon.html" with name="check" %}</span>
+                    {% elif row.state == 'current' %}
+                    <span class="z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-600 text-sm font-semibold text-white ring-4 ring-brand-100 dark:bg-brand-500 dark:ring-brand-900/60">{{ row.module.order }}</span>
+                    {% else %}
+                    <span class="z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500">{% include "partials/icon.html" with name="lock" class="h-4 w-4" %}</span>
+                    {% endif %}
+
+                    <div class="min-w-0 flex-1 pt-0.5">
+                        <div class="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+                            <div class="min-w-0">
+                                <p class="font-medium {% if row.state == 'locked' %}muted{% else %}heading{% endif %}">{{ row.module.l_title }}</p>
+                                <p class="muted mt-0.5 text-sm">
+                                    {% if row.state == 'done' %}
+                                        {% blocktrans with date=row.completed_at|date:"j E" %}Пройден {{ date }}{% endblocktrans %}
+                                    {% elif row.state == 'current' %}
+                                        {% if row.last_attempt and not row.last_attempt.is_passed %}
+                                            {% blocktrans with c=row.last_attempt.correct_count t=row.last_attempt.total_count %}Последняя попытка: верно {{ c }} из {{ t }}{% endblocktrans %}
+                                        {% elif row.has_draft %}{% trans "Есть сохранённые ответы — можно продолжить" %}
+                                        {% elif row.steps_total and row.quiz_ready %}{% blocktrans with d=row.steps_done t=row.steps_total %}Шаги обучения: {{ d }} из {{ t }} — можно проверить знания{% endblocktrans %}
+                                        {% elif row.steps_total %}{% blocktrans with d=row.steps_done t=row.steps_total %}Шаги обучения: {{ d }} из {{ t }}{% endblocktrans %}
+                                        {% else %}{% trans "Доступен прямо сейчас" %}{% endif %}
+                                    {% else %}
+                                        {% trans "Откроется после предыдущего модуля" %}
+                                    {% endif %}
+                                </p>
+                                {% if row.state == 'done' and row.first_try or row.attempts_count > 1 %}
+                                <p class="mt-1.5 flex flex-wrap gap-1.5">
+                                    {% if row.state == 'done' and row.first_try %}
+                                    <span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-500/20 dark:text-amber-300">{% include "partials/icon.html" with name="bolt" class="h-3 w-3" %} {% trans "с первой попытки" %}</span>
+                                    {% endif %}
+                                    {% if row.attempts_count > 1 %}
+                                    <span class="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300">{% blocktrans with n=row.attempts_count %}попыток: {{ n }}{% endblocktrans %}</span>
+                                    {% endif %}
+                                </p>
+                                {% endif %}
+                            </div>
+                            {% if row.state == 'current' %}
+                            <a href="{% url 'onboarding:module_detail' row.module.pk %}" class="btn-primary !px-4 !py-2 text-sm">{% if row.attempts_count %}{% trans "Продолжить" %}{% else %}{% trans "Начать" %}{% endif %}</a>
+                            {% elif row.state == 'done' %}
+                            <a href="{% url 'onboarding:module_detail' row.module.pk %}" class="link text-sm font-medium">{% trans "Повторить" %}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+
+                {# Финальный тест — последний шаг пути #}
+                <li class="relative flex gap-4">
+                    {% if d.final_state == 'approved' %}
+                    <span class="z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400">{% include "partials/icon.html" with name="clipboard" %}</span>
+                    {% elif d.final_state == 'pending_review' %}
+                    <span class="z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700 dark:bg-brand-500/20 dark:text-brand-300">{% include "partials/icon.html" with name="clock" %}</span>
+                    {% elif d.final_state == 'needs_rework' %}
+                    <span class="z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300">{% include "partials/icon.html" with name="refresh" %}</span>
+                    {% elif d.final_state == 'ready' %}
+                    <span class="z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white ring-4 ring-brand-100 dark:bg-brand-500 dark:ring-brand-900/60">{% include "partials/icon.html" with name="clipboard" %}</span>
+                    {% elif d.final_state == 'rejected' %}
+                    <span class="z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gray-200 text-gray-600 dark:bg-gray-800 dark:text-gray-300">{% include "partials/icon.html" with name="x" %}</span>
+                    {% else %}
+                    <span class="z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500">{% include "partials/icon.html" with name="lock" class="h-4 w-4" %}</span>
+                    {% endif %}
+
+                    <div class="min-w-0 flex-1 pt-0.5">
+                        <div class="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+                            <div>
+                                <p class="font-medium {% if d.final_state == 'locked' %}muted{% else %}heading{% endif %}">{% trans "Финальный тест" %}</p>
+                                <p class="muted mt-0.5 text-sm">
+                                    {% if d.final_state == 'locked' %}{% trans "Откроется после всех модулей" %}
+                                    {% elif d.final_state == 'ready' and d.final_has_draft %}{% trans "Есть сохранённые ответы — можно продолжить" %}
+                                    {% elif d.final_state == 'ready' %}{% trans "Три части: вопросы с вариантами, открытые вопросы и кейсы" %}
+                                    {% elif d.final_state == 'pending_review' %}{% trans "Отправлен — ждёт проверки руководителем" %}
+                                    {% elif d.final_state == 'needs_rework' and d.final_has_draft %}{% trans "Есть сохранённые ответы — можно продолжить" %}
+                                    {% elif d.final_state == 'needs_rework' %}{% trans "Нужна доработка — можно пересдать" %}
+                                    {% elif d.final_state == 'approved' %}{% trans "Пройден — вы допущены к работе" %}
+                                    {% else %}{% trans "Проверен" %}{% endif %}
+                                </p>
+                            </div>
+                            {% if d.can_take_final %}
+                            <a href="{% url 'finaltest:take' %}" class="btn-primary !px-4 !py-2 text-sm">
+                                {% if d.has_open_submission %}{% trans "Продолжить" %}{% elif d.final_state == 'needs_rework' %}{% trans "Пересдать" %}{% else %}{% trans "Начать" %}{% endif %}
+                            </a>
+                            {% endif %}
+                        </div>
+
+                        {% if d.submissions %}
+                        <ul class="mt-3 space-y-1.5">
+                            {% for sub in d.submissions %}
+                            <li class="card-inset flex flex-wrap items-center justify-between gap-2 px-3 py-2 text-sm">
+                                <span class="heading font-medium">{% blocktrans with n=sub.attempt_number %}Попытка {{ n }}{% endblocktrans %}</span>
+                                <span class="muted">{{ sub.submitted_at|date:"j E, H:i" }}{% if sub.mcq_score_percent is not None %} · {% blocktrans with p=sub.mcq_score_percent %}часть А: {{ p }}%{% endblocktrans %}{% endif %}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </li>
+            </ol>
+        </section>
+
+        <div class="space-y-6">
+
+            {# ── Статус ─────────────────────────────────────────────── #}
+            <section class="rounded-2xl border p-5 sm:p-6
+                {% if d.final_state == 'approved' %}border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950/40
+                {% elif d.final_state == 'needs_rework' %}border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/30
+                {% elif d.final_state == 'rejected' %}border-gray-300 bg-gray-100 dark:border-gray-800 dark:bg-gray-900
+                {% else %}border-brand-200 bg-brand-50 dark:border-brand-900 dark:bg-brand-900/20{% endif %}">
+                <p class="muted text-xs font-semibold uppercase tracking-wide">{% trans "Ваш статус" %}</p>
+                <p class="heading mt-1 text-lg font-semibold">
+                    {% if d.final_state == 'approved' %}{% trans "Допущен к работе" %}
+                    {% elif d.final_state == 'pending_review' %}{% trans "Работа на проверке" %}
+                    {% elif d.final_state == 'needs_rework' %}{% trans "Нужна доработка" %}
+                    {% elif d.final_state == 'rejected' %}{% trans "Обучение завершено" %}
+                    {% elif d.final_state == 'ready' %}{% trans "Готов к финальному тесту" %}
+                    {% else %}{% trans "Проходит обучение" %}{% endif %}
+                </p>
+                <p class="muted mt-1.5 text-sm">
+                    {% if d.final_state == 'approved' %}{% trans "Поздравляем! Все этапы пройдены." %}
+                    {% elif d.final_state == 'pending_review' %}{% trans "Руководитель проверит ваши ответы и примет решение." %}
+                    {% elif d.final_state == 'needs_rework' %}{% trans "Пересдайте финальный тест. Предыдущая попытка сохранена." %}
+                    {% elif d.final_state == 'rejected' %}{% trans "По итогам проверки принято решение об отказе. Подробности уточните у руководителя." %}
+                    {% elif d.final_state == 'ready' %}{% trans "Все модули пройдены. Осталось сдать финальный тест." %}
+                    {% else %}{% trans "Проходите модули по порядку. После последнего откроется финальный тест." %}{% endif %}
+                </p>
+            </section>
+
+            {# ── Тренировка ─────────────────────────────────────────── #}
+            <section class="card flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+                <div>
+                    <h2 class="heading text-lg font-semibold">{% trans "Тренировка" %}</h2>
+                    <p class="muted text-sm">{% trans "Свободные кейсы и мини-игры для тех, кто хочет углубиться. Без оценок." %}</p>
+                </div>
+                <a href="{% url 'practice:lobby' %}" class="btn-secondary shrink-0">{% trans "Открыть" %} {% include "partials/icon.html" with name="arrow" class="h-4 w-4" %}</a>
+            </section>
+
+            {# ── Значки ─────────────────────────────────────────────── #}
+            <section class="card p-5 sm:p-6">
+                <div class="flex items-baseline justify-between gap-3">
+                    <h2 class="heading text-lg font-semibold">{% trans "Значки" %}</h2>
+                    <span class="muted text-sm">{{ d.modules_done }} / {{ d.modules_total }}</span>
+                </div>
+                <ul class="mt-4 flex flex-wrap gap-3">
+                    {% for row in d.rows %}
+                    <li class="text-center" title="{{ row.module.l_title }}">
+                        {% if row.state == 'done' %}
+                        <span class="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-amber-500 text-white shadow-sm ring-2 ring-amber-200 dark:ring-amber-500/40">{% include "partials/icon.html" with name="medal" class="h-6 w-6" %}</span>
+                        {% else %}
+                        <span class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-300 dark:border-gray-700 dark:text-gray-600">{% include "partials/icon.html" with name="medal" class="h-6 w-6" %}</span>
+                        {% endif %}
+                        <span class="muted mt-1 block text-[11px] font-medium">{{ forloop.counter }}</span>
+                    </li>
+                    {% endfor %}
+                    <li class="text-center" title="{% trans 'Допущен к работе' %}">
+                        {% if d.final_state == 'approved' %}
+                        <span class="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white shadow-sm ring-2 ring-green-200 dark:ring-green-500/40">{% include "partials/icon.html" with name="star" class="h-6 w-6" %}</span>
+                        {% else %}
+                        <span class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-300 dark:border-gray-700 dark:text-gray-600">{% include "partials/icon.html" with name="star" class="h-6 w-6" %}</span>
+                        {% endif %}
+                        <span class="muted mt-1 block text-[11px] font-medium">{% trans "Допуск" %}</span>
+                    </li>
+                </ul>
+                <p class="muted mt-3 text-xs">{% trans "Значок выдаётся за каждый пройденный модуль." %}</p>
+            </section>
+
+            {# ── Достижения ─────────────────────────────────────────── #}
+            <section class="card p-5 sm:p-6">
+                <div class="flex items-baseline justify-between gap-3">
+                    <h2 class="heading text-lg font-semibold">{% trans "Достижения" %}</h2>
+                    <span class="muted text-sm">{{ d.game.achievements_earned }} / {{ d.game.achievements|length }}</span>
+                </div>
+                <ul class="mt-4 space-y-3">
+                    {% for item in d.game.achievements %}
+                    <li class="flex items-center gap-3 {% if not item.earned %}opacity-60{% endif %}">
+                        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full {% if item.earned %}bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-sm{% else %}border-2 border-dashed border-gray-300 text-gray-300 dark:border-gray-700 dark:text-gray-600{% endif %}">
+                            {% include "partials/icon.html" with name=item.icon class="h-5 w-5" %}
+                        </span>
+                        <span class="min-w-0">
+                            <span class="heading block text-sm font-semibold">{{ item.title }}</span>
+                            <span class="muted block text-xs">{{ item.hint }}</span>
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            {# ── Активность ─────────────────────────────────────────── #}
+            <section class="card p-5 sm:p-6">
+                <h2 class="heading text-lg font-semibold">{% trans "Недавняя активность" %}</h2>
+                <ul class="mt-4 space-y-4">
+                    {% for event in d.events %}
+                    <li class="flex gap-3">
+                        {% if event.kind == 'module_passed' %}
+                        <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400">{% include "partials/icon.html" with name="check" class="h-4 w-4" %}</span>
+                        {% elif event.kind == 'module_failed' %}
+                        <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400">{% include "partials/icon.html" with name="x" class="h-4 w-4" %}</span>
+                        {% elif event.kind == 'final_submitted' %}
+                        <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700 dark:bg-brand-500/20 dark:text-brand-300">{% include "partials/icon.html" with name="clipboard" class="h-4 w-4" %}</span>
+                        {% else %}
+                        <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400">{% include "partials/icon.html" with name="user" class="h-4 w-4" %}</span>
+                        {% endif %}
+                        <div class="min-w-0 text-sm">
+                            <p class="heading">
+                                {% if event.kind == 'module_passed' %}{% blocktrans with title=event.module.l_title %}Модуль «{{ title }}» пройден{% endblocktrans %}
+                                {% elif event.kind == 'module_failed' %}{% blocktrans with title=event.module.l_title c=event.correct t=event.total %}«{{ title }}»: верно {{ c }} из {{ t }}, нужна ещё попытка{% endblocktrans %}
+                                {% elif event.kind == 'final_submitted' %}{% blocktrans with n=event.attempt %}Финальный тест отправлен (попытка {{ n }}){% endblocktrans %}
+                                {% else %}{% trans "Вы зарегистрировались в платформе" %}{% endif %}
+                            </p>
+                            <p class="muted text-xs">{{ event.when|date:"j E, H:i" }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

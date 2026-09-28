@@ -1,0 +1,1 @@
+{"name":"ibox-css","private":true,"scripts":{"build":"tailwindcss -c tailwind.config.js -i input.css -o ../static/css/app.css --minify"},"devDependencies":{"tailwindcss":"3.4.17","@tailwindcss/typography":"0.5.16"}}

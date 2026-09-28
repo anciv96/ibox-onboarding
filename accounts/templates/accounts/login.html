@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Вход" %} — iBox{% endblock %}
+{% block content %}
+<div class="card mx-auto max-w-sm p-6 sm:p-8">
+    <h1 class="heading mb-1 text-xl font-semibold">{% trans "Вход" %}</h1>
+    <p class="muted mb-5 text-sm">{% trans "Войди под логином и паролем, которые ты задал при регистрации." %}</p>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {% if form.errors %}
+        <p class="text-sm text-red-600 dark:text-red-400">{% trans "Неверный логин или пароль." %}</p>
+        {% endif %}
+        <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Логин" %}</label>
+            {{ form.username }}
+        </div>
+        <div>
+            <label class="mb-1 block text-sm font-medium">{% trans "Пароль" %}</label>
+            {{ form.password }}
+        </div>
+        <button type="submit" class="btn-primary w-full">{% trans "Войти" %}</button>
+    </form>
+</div>
+{% endblock %}

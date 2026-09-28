@@ -1,0 +1,52 @@
+version: "3.9"
+
+# Продовый стек: db (Postgres, данные — в именованном томе pgdata) + web (Django/gunicorn, статику
+# отдаёт сам через whitenoise) + caddy (TLS и реверс-прокси на 80/443). Данные ученика живут ТОЛЬКО
+# в томе pgdata, а не в образе — образ можно пересобирать и переносить на любой сервер без потери
+# данных, если перенести том (или бэкап pg_dump) вместе с ним. Подробности переноса — в DEPLOY.md.
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ibox}
+      POSTGRES_USER: ${POSTGRES_USER:-ibox}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?ставится в .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ibox}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-ibox}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-ibox}
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - "8000"
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:

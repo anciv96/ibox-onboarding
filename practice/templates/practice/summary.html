@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Итоги раунда" %} — iBox{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl">
+    <section class="mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 p-6 text-center text-white shadow-sm dark:from-brand-700 dark:to-brand-900 sm:p-8">
+        <p class="text-sm text-brand-100">{% trans "Итоги раунда" %}</p>
+        <p class="mt-2 text-5xl font-semibold">{{ correct }}<span class="text-2xl font-normal text-brand-100"> / {{ answered }}</span></p>
+        <p class="mt-3 text-sm text-brand-100 sm:text-base">
+            {% if percent == 100 %}{% trans "Безупречно! Такого сейлза не собьёшь ни одним кейсом." %}
+            {% elif percent >= 70 %}{% trans "Сильный результат. Разберём пару ошибок — и будет идеально." %}
+            {% elif percent >= 40 %}{% trans "Неплохо. Ошибки ниже — лучший материал для роста." %}
+            {% else %}{% trans "Это тренировка — ошибаться здесь можно и нужно. Посмотри разбор и сыграй ещё." %}{% endif %}
+        </p>
+        <div class="mt-5 flex flex-col justify-center gap-3 sm:flex-row">
+            <form method="post" action="{% url 'practice:start' %}">
+                {% csrf_token %}
+                <input type="hidden" name="category" value="{{ category }}">
+                <button type="submit" class="btn-light w-full sm:w-auto">{% include "partials/icon.html" with name="refresh" class="h-4 w-4" %} {% trans "Ещё раунд" %}</button>
+            </form>
+            <a href="{% url 'practice:lobby' %}" class="inline-flex items-center justify-center rounded-lg border border-white/40 px-5 py-3 font-medium text-white transition-colors hover:bg-white/10">{% trans "В лобби" %}</a>
+        </div>
+    </section>
+
+    {% if missed %}
+    <h2 class="heading mb-3 text-lg font-semibold">{% trans "Разбор ошибок" %}</h2>
+    <div class="space-y-3">
+        {% for m in missed %}
+        <article class="card p-4">
+            <p class="heading font-medium">{{ m.question.l_prompt }}</p>
+            {% if m.chosen %}<p class="mt-2 text-sm text-red-700 dark:text-red-300">✗ {{ m.chosen.l_text }}</p>{% endif %}
+            {% if m.right %}<p class="mt-1 text-sm text-green-700 dark:text-green-300">✓ {{ m.right.l_text }}</p>{% endif %}
+            {% if m.question.l_explanation %}<p class="muted mt-2 text-sm">{{ m.question.l_explanation }}</p>{% endif %}
+        </article>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

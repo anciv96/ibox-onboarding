@@ -1,0 +1,99 @@
+{% load static i18n %}{% get_current_language as CURRENT_LANG %}<!DOCTYPE html>
+<html lang="{{ CURRENT_LANG }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>{% block title %}iBox — {% trans "онбординг" %}{% endblock %}</title>
+    <script>
+        /* Тема применяется до отрисовки, чтобы страница не «мигала» */
+        (function () {
+            try {
+                var saved = localStorage.getItem('theme');
+                var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (dark) document.documentElement.classList.add('dark');
+            } catch (e) {}
+        })();
+    </script>
+    {# CSS собран заранее (tailwind/, см. CLAUDE.md) — не зависит от внешних CDN #}
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body class="min-h-screen bg-gray-50 text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100">
+    <header class="bg-brand-600 text-white shadow-sm dark:bg-brand-700">
+        <div class="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
+            <a href="{% if user.is_authenticated %}{% url 'onboarding:dashboard' %}{% else %}/{% endif %}"
+               class="flex items-center gap-2">
+                {% static 'logo.png' as logo_url %}
+                {# Логотип: сначала белая версия static/logo-white.png (для синей шапки), иначе static/logo.png на белой плашке, иначе просто текст «iBox» #}
+                <img src="{% static 'logo-white.png' %}" alt="iBox" class="h-8 w-auto"
+                     onload="document.getElementById('brand-name').classList.add('hidden')"
+                     onerror="if(!this.dataset.tried){this.dataset.tried=1;this.className='h-8 w-auto rounded-md bg-white px-2 py-1';this.src='{{ logo_url }}'}else{this.remove()}">
+                <span id="brand-name" class="text-lg font-semibold tracking-tight">iBox</span>
+                <span class="hidden font-normal text-brand-100 sm:inline">— {% trans "онбординг" %}</span>
+            </a>
+            <div class="flex items-center gap-2 sm:gap-3">
+                {% if nav_progress %}
+                <a href="{% url 'onboarding:dashboard' %}" title="{% trans 'Прогресс онбординга' %}"
+                   class="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-white/25">
+                    <span class="hidden sm:inline">{% trans "Прогресс онбординга" %}</span> <span data-nav-percent>{{ nav_progress.percent }}</span>%
+                </a>
+                {% if nav_game %}
+                <a href="{% url 'onboarding:dashboard' %}" title="{% trans 'Ранг и опыт' %}"
+                   class="hidden items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-white/25 sm:inline-flex">
+                    {% include "partials/icon.html" with name="bolt" class="h-3.5 w-3.5" %}
+                    <span data-nav-rank>{{ nav_game.rank_name }}</span> · <span data-nav-xp>{{ nav_game.xp }}</span> XP
+                </a>
+                {% endif %}
+                <a href="{% url 'practice:lobby' %}" class="hidden rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-white/25 sm:inline-block">{% trans "Тренировка" %}</a>
+                {% endif %}
+                <form action="{% url 'set_language' %}" method="post"
+                      class="flex overflow-hidden rounded-lg border border-white/30 text-xs font-semibold">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                    <button name="language" value="ru" type="submit" title="Русский"
+                            class="px-2.5 py-1.5 {% if CURRENT_LANG == 'ru' %}bg-white text-brand-700{% else %}text-white/80 hover:text-white{% endif %}">RU</button>
+                    <button name="language" value="uz" type="submit" title="Oʻzbekcha"
+                            class="px-2.5 py-1.5 {% if CURRENT_LANG == 'uz' %}bg-white text-brand-700{% else %}text-white/80 hover:text-white{% endif %}">UZ</button>
+                </form>
+                <button type="button" id="theme-toggle" title="{% trans 'Сменить тему' %}" aria-label="{% trans 'Сменить тему' %}"
+                        class="rounded-lg border border-white/30 p-1.5 text-white/80 transition-colors hover:text-white">
+                    <svg class="hidden h-5 w-5 dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 14v2M5.6 5.6l1.4 1.4m10 10l1.4 1.4M3 12h2m14 0h2M5.6 18.4L7 17m10-10l1.4-1.4M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    <svg class="h-5 w-5 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                </button>
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'accounts:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="text-sm text-white/80 transition-colors hover:text-white">{% trans "Выйти" %}</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% if nav_progress %}
+        <div class="h-1 bg-black/15" role="progressbar" data-nav-progressbar aria-valuenow="{{ nav_progress.percent }}" aria-valuemin="0" aria-valuemax="100">
+            <div data-nav-bar class="h-1 bg-white transition-all" style="width: {{ nav_progress.percent }}%"></div>
+        </div>
+        {% endif %}
+    </header>
+    <main class="mx-auto max-w-5xl px-4 py-8 sm:py-10">
+        {% if messages %}
+        <div class="mb-6 space-y-2">
+            {% for message in messages %}
+            <div class="rounded-lg border px-4 py-3 text-sm
+                        {% if message.tags == 'error' %}border-red-200 bg-red-50 text-red-800 dark:border-red-900 dark:bg-red-950/50 dark:text-red-200
+                        {% elif message.tags == 'success' %}border-green-200 bg-green-50 text-green-800 dark:border-green-900 dark:bg-green-950/50 dark:text-green-200
+                        {% else %}border-brand-200 bg-brand-50 text-brand-800 dark:border-brand-900 dark:bg-brand-900/30 dark:text-brand-100{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    <script>
+        document.getElementById('theme-toggle').addEventListener('click', function () {
+            var dark = document.documentElement.classList.toggle('dark');
+            try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+        });
+    </script>
+</body>
+</html>

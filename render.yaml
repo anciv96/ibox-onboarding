@@ -1,0 +1,26 @@
+databases:
+  - name: ibox-onboarding-db
+    plan: free
+    databaseName: ibox_onboarding
+    user: ibox_onboarding
+
+services:
+  - type: web
+    name: ibox-onboarding
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate --noinput"
+    startCommand: "gunicorn config.wsgi --log-file -"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: CSRF_TRUSTED_ORIGINS
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ibox-onboarding-db
+          property: connectionString

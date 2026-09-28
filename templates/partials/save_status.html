@@ -1,0 +1,8 @@
+{% load i18n %}<p data-save-status data-state="idle" aria-live="polite"
+   data-msg-idle="{% trans 'Ответы сохраняются автоматически' %}"
+   data-msg-restored="{% trans 'Черновик восстановлен' %}"
+   data-msg-saving="{% trans 'Сохраняем…' %}"
+   data-msg-saved="{% trans 'Сохранено' %}"
+   data-msg-offline="{% trans 'Нет связи — ответы сохранены на устройстве, отправим автоматически' %}"
+   data-msg-failed="{% trans 'Не удалось сохранить. Обнови страницу или войди заново — ответы остались на этом устройстве' %}"
+   class="muted text-xs data-[state=saved]:text-green-600 data-[state=offline]:text-amber-600 data-[state=failed]:text-red-600 dark:data-[state=saved]:text-green-400 dark:data-[state=offline]:text-amber-400 dark:data-[state=failed]:text-red-400"></p>

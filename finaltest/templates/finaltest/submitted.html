@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Тест отправлен" %} — iBox{% endblock %}
+{% block content %}
+<div class="card mx-auto max-w-md p-8 text-center">
+    <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-500/20 dark:text-green-400">
+        {% include "partials/icon.html" with name="check" class="h-7 w-7" %}
+    </div>
+    <h1 class="heading mb-2 text-2xl font-semibold">{% trans "Тест отправлен!" %}</h1>
+    <p class="muted">{% trans "Руководитель проверит твои ответы и примет решение. Результат сообщат отдельно." %}</p>
+    <a href="{% url 'onboarding:dashboard' %}" class="btn-primary mt-6">{% trans "К моему прогрессу" %}</a>
+</div>
+{% endblock %}

@@ -1,0 +1,708 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-27 01:09+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: uz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Логин"
+msgstr "Login"
+
+msgid "Например, имя латиницей: aziz.karimov"
+msgstr "Masalan, ismingiz lotin harflarida: aziz.karimov"
+
+msgid "Минимум 8 символов, не только цифры"
+msgstr "Kamida 8 ta belgi, faqat raqamlardan iborat boʻlmasin"
+
+msgid "Повтори пароль"
+msgstr "Parolni takrorla"
+
+msgid "Вход"
+msgstr "Kirish"
+
+msgid "Войди под логином и паролем, которые ты задал при регистрации."
+msgstr "Roʻyxatdan oʻtishda kiritgan login va parolingiz bilan kir."
+
+msgid "Неверный логин или пароль."
+msgstr "Login yoki parol notoʻgʻri."
+
+msgid "Пароль"
+msgstr "Parol"
+
+msgid "Войти"
+msgstr "Kirish"
+
+msgid "Регистрация"
+msgstr "Roʻyxatdan oʻtish"
+
+#, python-format
+msgid "Добро пожаловать, %(name)s!"
+msgstr "Xush kelibsiz, %(name)s!"
+
+msgid "Придумай логин и пароль для входа в курс."
+msgstr "Kursga kirish uchun login va parol oʻylab top."
+
+msgid "Начать обучение"
+msgstr "Oʻqishni boshlash"
+
+msgid "Эта ссылка уже использована. Войди под своим логином и паролем."
+msgstr "Bu havola allaqachon ishlatilgan. Oʻz login va parolingiz bilan kir."
+
+msgid "Эта ссылка больше недействительна. Обратись к руководителю."
+msgstr "Bu havola endi yaroqsiz. Rahbaringga murojaat qil."
+
+msgid "Тест отправлен"
+msgstr "Test yuborildi"
+
+msgid "Тест отправлен!"
+msgstr "Test yuborildi!"
+
+msgid ""
+"Руководитель проверит твои ответы и примет решение. Результат сообщат "
+"отдельно."
+msgstr ""
+"Rahbar javoblaringni tekshirib, qaror qabul qiladi. Natija alohida xabar "
+"qilinadi."
+
+msgid "К моему прогрессу"
+msgstr "Mening natijalarimga"
+
+msgid "Финальный тест"
+msgstr "Yakuniy test"
+
+#, python-format
+msgid ""
+"Попытка %(n)s. Отвечай честно и развёрнуто — от этого зависит решение "
+"руководителя."
+msgstr ""
+"%(n)s-urinish. Halol va batafsil javob ber — rahbarning qarori shunga "
+"bogʻliq."
+
+msgid "Часть А. Вопросы с вариантами ответа"
+msgstr "A qism. Variantli savollar"
+
+msgid "Часть Б. Открытые вопросы"
+msgstr "B qism. Ochiq savollar"
+
+msgid "Заполнено:"
+msgstr "Toʻldirildi:"
+
+msgid "Отправить на проверку"
+msgstr "Tekshiruvga yuborish"
+
+msgid "Отправить тест на проверку? После отправки изменить ответы нельзя."
+msgstr "Testni tekshiruvga yuborasizmi? Yuborilgandan keyin javoblarni oʻzgartirib boʻlmaydi."
+
+msgid "У этого аккаунта нет профиля ученика."
+msgstr "Bu akkauntda oʻquvchi profili yoʻq."
+
+msgid "Финальный тест пока недоступен."
+msgstr "Yakuniy test hozircha mavjud emas."
+
+msgid "Новичок"
+msgstr "Yangi boshlovchi"
+
+msgid "Стажёр"
+msgstr "Stajyor"
+
+msgid "Практик"
+msgstr "Amaliyotchi"
+
+msgid "Знаток"
+msgstr "Bilimdon"
+
+msgid "Эксперт"
+msgstr "Ekspert"
+
+msgid "Мастер iBox"
+msgstr "iBox ustasi"
+
+msgid "Первый шаг"
+msgstr "Birinchi qadam"
+
+msgid "Отметь первый шаг обучения"
+msgstr "Birinchi oʻquv qadamini belgila"
+
+msgid "В деле"
+msgstr "Amalda"
+
+msgid "Выполни 3 практических задания"
+msgstr "3 ta amaliy topshiriqni bajar"
+
+msgid "С первого раза"
+msgstr "Bir urinishda"
+
+msgid "Пройди тест модуля с первой попытки"
+msgstr "Modul testini birinchi urinishda oʻt"
+
+msgid "В ритме"
+msgstr "Ritmda"
+
+msgid "Занимайся 3 дня подряд"
+msgstr "3 kun ketma-ket shugʻullan"
+
+msgid "Полпути"
+msgstr "Yoʻlning yarmi"
+
+msgid "Пройди половину онбординга"
+msgstr "Onboardingning yarmini oʻt"
+
+msgid "Допущен к работе"
+msgstr "Ishga qabul qilindi"
+
+msgid "Получи допуск от руководителя"
+msgstr "Rahbardan ruxsat ol"
+
+msgid "Видео"
+msgstr "Video"
+
+msgid "Материал"
+msgstr "Material"
+
+msgid "Практика"
+msgstr "Amaliyot"
+
+msgid "Ссылка"
+msgstr "Havola"
+
+msgid "Отметить как просмотренное"
+msgstr "Koʻrildi deb belgilash"
+
+msgid "Отметить как прочитанное"
+msgstr "Oʻqildi deb belgilash"
+
+msgid "Отметить как выполненное"
+msgstr "Bajarildi deb belgilash"
+
+msgid "Отметить как изученное"
+msgstr "Oʻrganildi deb belgilash"
+
+msgid "Просмотрено"
+msgstr "Koʻrildi"
+
+msgid "Прочитано"
+msgstr "Oʻqildi"
+
+msgid "Выполнено"
+msgstr "Bajarildi"
+
+msgid "Изучено"
+msgstr "Oʻrganildi"
+
+msgid "Мой прогресс"
+msgstr "Mening natijalarim"
+
+#, python-format
+msgid "День %(n)s обучения"
+msgstr "Oʻqishning %(n)s-kuni"
+
+#, python-format
+msgid "Привет, %(name)s!"
+msgstr "Salom, %(name)s!"
+
+msgid "Обучение завершено — вы допущены к работе. Поздравляем!"
+msgstr "Oʻqish yakunlandi — siz ishga qabul qilindingiz. Tabriklaymiz!"
+
+msgid "Финальный тест отправлен. Осталось дождаться решения руководителя."
+msgstr "Yakuniy test yuborildi. Rahbarning qarorini kutish qoldi."
+
+#, python-format
+msgid "Следующий шаг — «%(title)s»."
+msgstr "Keyingi qadam — «%(title)s»."
+
+msgid "Все модули пройдены. Осталось сдать финальный тест."
+msgstr "Barcha modullar tugallandi. Yakuniy testni topshirish qoldi."
+
+msgid "Здесь собраны ваш путь обучения, результаты и история."
+msgstr "Bu yerda oʻqish yoʻlingiz, natijalaringiz va tarixingiz jamlangan."
+
+msgid "Продолжить обучение"
+msgstr "Oʻqishni davom ettirish"
+
+msgid "Продолжить тест"
+msgstr "Testni davom ettirish"
+
+msgid "Пересдать финальный тест"
+msgstr "Yakuniy testni qayta topshirish"
+
+msgid "Начать финальный тест"
+msgstr "Yakuniy testni boshlash"
+
+msgid "максимальный ранг"
+msgstr "eng yuqori daraja"
+
+#, python-format
+msgid "до ранга «%(r)s»: %(n)s XP"
+msgstr "«%(r)s» darajasigacha: %(n)s XP"
+
+#, python-format
+msgid "Серия: %(n)s день подряд"
+msgid_plural "Серия: %(n)s дней подряд"
+msgstr[0] "Seriya: %(n)s kun ketma-ket"
+msgstr[1] "Seriya: %(n)s kun ketma-ket"
+
+#, python-format
+msgid "Прогресс курса: %(p)s%%"
+msgstr "Kurs jarayoni: %(p)s%%"
+
+msgid "курса пройдено"
+msgstr "kurs oʻtildi"
+
+msgid "Модулей пройдено"
+msgstr "Oʻtilgan modullar"
+
+msgid "Точность ответов"
+msgstr "Javoblar aniqligi"
+
+msgid "по всем попыткам"
+msgstr "barcha urinishlar boʻyicha"
+
+msgid "С первой попытки"
+msgstr "Birinchi urinishda"
+
+#, python-format
+msgid "всего попыток: %(n)s"
+msgstr "jami urinishlar: %(n)s"
+
+msgid "Дней в обучении"
+msgstr "Oʻqish kunlari"
+
+#, python-format
+msgid "старт: %(date)s"
+msgstr "boshlangan: %(date)s"
+
+msgid "Путь обучения"
+msgstr "Oʻqish yoʻli"
+
+msgid ""
+"Модули открываются по порядку — следующий доступен после верных ответов на "
+"все вопросы."
+msgstr ""
+"Modullar tartib bilan ochiladi — keyingisi barcha savollarga toʻgʻri javob "
+"berilgach ochiladi."
+
+#, python-format
+msgid "Пройден %(date)s"
+msgstr "%(date)s oʻtilgan"
+
+#, python-format
+msgid "Последняя попытка: верно %(c)s из %(t)s"
+msgstr "Oxirgi urinish: %(t)s tadan %(c)s tasi toʻgʻri"
+
+msgid "Есть сохранённые ответы — можно продолжить"
+msgstr "Saqlangan javoblar bor — davom ettirish mumkin"
+
+#, python-format
+msgid "Шаги обучения: %(d)s из %(t)s — можно проверить знания"
+msgstr "Oʻrganish bosqichlari: %(t)s tadan %(d)s tasi — bilimni tekshirish mumkin"
+
+#, python-format
+msgid "Шаги обучения: %(d)s из %(t)s"
+msgstr "Oʻqish bosqichlari: %(t)s tadan %(d)s tasi"
+
+msgid "Доступен прямо сейчас"
+msgstr "Hozir ochiq"
+
+msgid "Откроется после предыдущего модуля"
+msgstr "Oldingi modul tugagach ochiladi"
+
+msgid "с первой попытки"
+msgstr "birinchi urinishda"
+
+#, python-format
+msgid "попыток: %(n)s"
+msgstr "urinishlar: %(n)s"
+
+msgid "Продолжить"
+msgstr "Davom ettirish"
+
+msgid "Начать"
+msgstr "Boshlash"
+
+msgid "Повторить"
+msgstr "Takrorlash"
+
+msgid "Откроется после всех модулей"
+msgstr "Barcha modullardan keyin ochiladi"
+
+msgid "Три части: вопросы с вариантами, открытые вопросы и кейсы"
+msgstr "Uch qism: variantli savollar, ochiq savollar va keyslar"
+
+msgid "Отправлен — ждёт проверки руководителем"
+msgstr "Yuborilgan — rahbar tekshiruvini kutmoqda"
+
+msgid "Нужна доработка — можно пересдать"
+msgstr "Qayta ishlash kerak — qayta topshirish mumkin"
+
+msgid "Пройден — вы допущены к работе"
+msgstr "Topshirildi — siz ishga qabul qilindingiz"
+
+msgid "Проверен"
+msgstr "Tekshirilgan"
+
+msgid "Пересдать"
+msgstr "Qayta topshirish"
+
+#, python-format
+msgid "Попытка %(n)s"
+msgstr "%(n)s-urinish"
+
+#, python-format
+msgid "часть А: %(p)s%%"
+msgstr "A qism: %(p)s%%"
+
+msgid "Ваш статус"
+msgstr "Sizning holatingiz"
+
+msgid "Работа на проверке"
+msgstr "Ish tekshiruvda"
+
+msgid "Нужна доработка"
+msgstr "Qayta ishlash kerak"
+
+msgid "Обучение завершено"
+msgstr "Oʻqish yakunlandi"
+
+msgid "Готов к финальному тесту"
+msgstr "Yakuniy testga tayyor"
+
+msgid "Проходит обучение"
+msgstr "Oʻqish davom etmoqda"
+
+msgid "Поздравляем! Все этапы пройдены."
+msgstr "Tabriklaymiz! Barcha bosqichlar oʻtildi."
+
+msgid "Руководитель проверит ваши ответы и примет решение."
+msgstr "Rahbar javoblaringizni tekshirib, qaror qabul qiladi."
+
+msgid "Пересдайте финальный тест. Предыдущая попытка сохранена."
+msgstr "Yakuniy testni qayta topshiring. Oldingi urinish saqlangan."
+
+msgid ""
+"По итогам проверки принято решение об отказе. Подробности уточните у "
+"руководителя."
+msgstr ""
+"Tekshiruv natijasiga koʻra rad etish haqida qaror qabul qilindi. "
+"Tafsilotlarni rahbardan soʻrang."
+
+msgid "Проходите модули по порядку. После последнего откроется финальный тест."
+msgstr "Modullarni tartib bilan oʻting. Oxirgisidan keyin yakuniy test ochiladi."
+
+msgid "Тренировка"
+msgstr "Mashq"
+
+msgid "Свободные кейсы и мини-игры для тех, кто хочет углубиться. Без оценок."
+msgstr "Chuqurroq oʻrganmoqchi boʻlganlar uchun erkin keyslar va mini-oʻyinlar. Baholarsiz."
+
+msgid "Открыть"
+msgstr "Ochish"
+
+msgid "Значки"
+msgstr "Nishonlar"
+
+msgid "Допуск"
+msgstr "Qabul"
+
+msgid "Значок выдаётся за каждый пройденный модуль."
+msgstr "Har bir oʻtilgan modul uchun nishon beriladi."
+
+msgid "Достижения"
+msgstr "Yutuqlar"
+
+msgid "Недавняя активность"
+msgstr "Soʻnggi faollik"
+
+#, python-format
+msgid "Модуль «%(title)s» пройден"
+msgstr "«%(title)s» moduli oʻtildi"
+
+#, python-format
+msgid "«%(title)s»: верно %(c)s из %(t)s, нужна ещё попытка"
+msgstr "«%(title)s»: %(t)s tadan %(c)s tasi toʻgʻri, yana urinish kerak"
+
+#, python-format
+msgid "Финальный тест отправлен (попытка %(n)s)"
+msgstr "Yakuniy test yuborildi (%(n)s-urinish)"
+
+msgid "Вы зарегистрировались в платформе"
+msgstr "Siz platformada roʻyxatdan oʻtdingiz"
+
+#, python-format
+msgid "Модуль %(p)s из %(t)s"
+msgstr "%(p)s-modul, jami %(t)s ta"
+
+msgid "Модуль пройден — материалы остаются доступными"
+msgstr "Modul oʻtildi — materiallar ochiq qoladi"
+
+msgid "Шаги обучения"
+msgstr "Oʻqish bosqichlari"
+
+msgid "Сохраняем…"
+msgstr "Saqlanmoqda…"
+
+msgid "Сохранено"
+msgstr "Saqlandi"
+
+msgid "Не удалось сохранить. Обнови страницу и попробуй ещё раз"
+msgstr "Saqlab boʻlmadi. Sahifani yangila va qayta urinib koʻr"
+
+msgid "Нет связи — попробуй ещё раз, когда интернет вернётся"
+msgstr "Aloqa yoʻq — internet qaytgach, qayta urinib koʻr"
+
+msgid "Напиши короткую заметку — без неё шаг не засчитается"
+msgstr "Qisqa izoh yoz — usiz bosqich hisoblanmaydi"
+
+msgid "Новый ранг:"
+msgstr "Yangi daraja:"
+
+msgid "по желанию"
+msgstr "ixtiyoriy"
+
+msgid "Что сделал и что понял…"
+msgstr "Nima qilding va nimani tushunding…"
+
+msgid "Твоя заметка"
+msgstr "Izohing"
+
+msgid "Материалы для этого модуля ещё не добавлены."
+msgstr "Bu modul uchun materiallar hali qoʻshilmagan."
+
+msgid "Проверка знаний"
+msgstr "Bilimlarni tekshirish"
+
+#, python-format
+msgid "%(n)s вопрос — нужно ответить правильно на все."
+msgid_plural "%(n)s вопросов — нужно ответить правильно на все."
+msgstr[0] "%(n)s ta savol — hammasiga toʻgʻri javob berish kerak."
+msgstr[1] "%(n)s ta savol — hammasiga toʻgʻri javob berish kerak."
+
+msgid "Пройти тест ещё раз"
+msgstr "Testni qayta topshirish"
+
+msgid "Проверить знания"
+msgstr "Bilimlarni tekshirish"
+
+msgid "Осталось обязательных шагов:"
+msgstr "Qolgan majburiy bosqichlar:"
+
+msgid "К материалам модуля"
+msgstr "Modul materiallariga"
+
+msgid ""
+"Чтобы перейти дальше, нужно ответить правильно на все вопросы. Ошибся — "
+"ничего страшного: можно перечитать материалы и сразу попробовать снова."
+msgstr ""
+"Davom etish uchun barcha savollarga toʻgʻri javob berish kerak. Xato qilsang "
+"— zarari yoʻq: materiallarni qayta oʻqib, darhol yana urinib koʻrish mumkin."
+
+msgid "Модуль уже пройден — можно пройти тест ещё раз или идти дальше."
+msgstr "Modul allaqachon oʻtilgan — testni yana topshirish yoki davom etish mumkin."
+
+#, python-format
+msgid ""
+"Верно %(c)s из %(t)s. Вопросы с ошибками выделены — поправь и отправь снова."
+msgstr ""
+"%(t)s tadan %(c)s tasi toʻgʻri. Xato savollar belgilangan — tuzatib, qayta "
+"yubor."
+
+#, python-format
+msgid "Попытка №%(n)s"
+msgstr "%(n)s-urinish"
+
+msgid "Неверно"
+msgstr "Notoʻgʻri"
+
+msgid "Проверить ответы"
+msgstr "Javoblarni tekshirish"
+
+msgid "У этого модуля пока нет вопросов."
+msgstr "Bu modulda hozircha savollar yoʻq."
+
+msgid "Перечитать материалы"
+msgstr "Materiallarni qayta oʻqish"
+
+msgid "Сначала пройди предыдущие модули."
+msgstr "Avval oldingi modullarni oʻt."
+
+msgid ""
+"Сначала выполни все обязательные шаги обучения — потом откроется проверка "
+"знаний."
+msgstr ""
+"Avval barcha majburiy oʻqish bosqichlarini bajar — shundan keyin bilimlarni "
+"tekshirish ochiladi."
+
+#, python-format
+msgid "Модуль пройден! +%(xp)s XP, значок получен — можно двигаться дальше."
+msgstr "Modul oʻtildi! +%(xp)s XP, nishon olindi — davom etish mumkin."
+
+#, python-format
+msgid "Новый ранг: %(rank)s!"
+msgstr "Yangi daraja: %(rank)s!"
+
+msgid "Кейсы: бизнес → решение"
+msgstr "Keyslar: biznes → yechim"
+
+msgid "Нестандартные бизнесы"
+msgstr "Nostandart bizneslar"
+
+msgid "Куда идти?"
+msgstr "Qayerga borish kerak?"
+
+msgid "Тарифы и продукты"
+msgstr "Tariflar va mahsulotlar"
+
+msgid "Правда или миф"
+msgstr "Rost yoki yolgʻon"
+
+msgid "Деньги и цифры"
+msgstr "Pul va raqamlar"
+
+msgid "Бизнес с задачей — найди решение в iBox, не зная подсказки."
+msgstr "Vazifasi bor biznes — ishora boʻlmasa ham iBoxʼdagi yechimni top."
+
+msgid ""
+"Аренда, салоны, сервисы, производство: подходит ли iBox и как обойти "
+"ограничение."
+msgstr "Ijara, salonlar, servislar, ishlab chiqarish: iBox mosmi va cheklovni qanday aylanib oʻtish mumkin."
+
+msgid "Ситуация из работы — в какой раздел, документ или отчёт идти."
+msgstr "Ish vaziyati — qaysi boʻlim, hujjat yoki hisobotga borish kerak."
+
+msgid "Подбери тариф или пойми, что клиенту нужен другой продукт."
+msgstr "Tarifni tanla yoki mijozga boshqa mahsulot kerakligini tushun."
+
+msgid "Быстрая игра: утверждение — правда или миф?"
+msgstr "Tezkor oʻyin: fikr — rostmi yoki yolgʻonmi?"
+
+msgid "Деньги, долги, прибыль: что показать клиенту и в каком порядке."
+msgstr "Pul, qarz, foyda: mijozga nimani va qanday tartibda koʻrsatish kerak."
+
+msgid ""
+"Свободная игра для тех, кто хочет углубиться: без оценок и без проверки "
+"руководителем. Раунд — 10 случайных вопросов, после каждого ответа разбор."
+msgstr "Chuqurroq oʻrganmoqchi boʻlganlar uchun erkin oʻyin: baholarsiz va rahbar tekshiruvisiz. Raund — 10 ta tasodifiy savol, har bir javobdan keyin tahlil."
+
+msgid "Смешанный раунд"
+msgstr "Aralash raund"
+
+msgid "ответов"
+msgstr "javob"
+
+msgid "точность"
+msgstr "aniqlik"
+
+msgid "освоено"
+msgstr "oʻzlashtirilgan"
+
+msgid "Выбери игру"
+msgstr "Oʻyinni tanla"
+
+msgid "освоено %(m)s из %(t)s"
+msgstr "%(t)s tadan %(m)s tasi oʻzlashtirilgan"
+
+msgid "Играть"
+msgstr "Oʻynash"
+
+msgid "Вопросы для тренировки ещё не добавлены."
+msgstr "Mashq savollari hali qoʻshilmagan."
+
+msgid ""
+"Тренировка не влияет ни на прогресс, ни на допуск — это только для тебя. "
+"Сначала предлагаются вопросы, которых ты ещё не видел, и те, где ошибся."
+msgstr "Mashq na progressga, na ruxsatga taʼsir qiladi — bu faqat sen uchun. Avval sen hali koʻrmagan va xato qilgan savollar taklif etiladi."
+
+msgid "В лобби"
+msgstr "Lobbiga"
+
+msgid "Вопрос %(p)s из %(t)s"
+msgstr "Savol: %(p)s / %(t)s"
+
+msgid "верно"
+msgstr "toʻgʻri"
+
+msgid "Верно!"
+msgstr "Toʻgʻri!"
+
+msgid "Не совсем."
+msgstr "Unchalik emas."
+
+msgid "Итоги раунда"
+msgstr "Raund yakunlari"
+
+msgid "Дальше"
+msgstr "Keyingisi"
+
+msgid "Безупречно! Такого сейлза не собьёшь ни одним кейсом."
+msgstr "Benuqson! Bunday sotuvchini hech qanday keys adashtira olmaydi."
+
+msgid "Сильный результат. Разберём пару ошибок — и будет идеально."
+msgstr "Kuchli natija. Bir-ikki xatoni tahlil qilsak — mukammal boʻladi."
+
+msgid "Неплохо. Ошибки ниже — лучший материал для роста."
+msgstr "Fikr yomon emas. Quyidagi xatolar — oʻsish uchun eng yaxshi material."
+
+msgid ""
+"Это тренировка — ошибаться здесь можно и нужно. Посмотри разбор и сыграй ещё."
+msgstr "Bu mashq — bu yerda xato qilish mumkin va kerak. Tahlilni koʻrib, yana oʻyna."
+
+msgid "Ещё раунд"
+msgstr "Yana raund"
+
+msgid "Разбор ошибок"
+msgstr "Xatolar tahlili"
+
+msgid "В этой игре пока нет вопросов."
+msgstr "Bu oʻyinda hozircha savollar yoʻq."
+
+msgid "Django site admin"
+msgstr ""
+
+msgid "онбординг"
+msgstr "onboarding"
+
+msgid "Прогресс онбординга"
+msgstr "Onboarding jarayoni"
+
+msgid "Ранг и опыт"
+msgstr "Daraja va tajriba"
+
+msgid "Сменить тему"
+msgstr "Mavzuni almashtirish"
+
+msgid "Выйти"
+msgstr "Chiqish"
+
+msgid "Ответы сохраняются автоматически"
+msgstr "Javoblar avtomatik saqlanadi"
+
+msgid "Черновик восстановлен"
+msgstr "Qoralama tiklandi"
+
+msgid "Нет связи — ответы сохранены на устройстве, отправим автоматически"
+msgstr "Aloqa yoʻq — javoblar qurilmada saqlandi, avtomatik yuboriladi"
+
+msgid ""
+"Не удалось сохранить. Обнови страницу или войди заново — ответы остались на "
+"этом устройстве"
+msgstr ""
+"Saqlab boʻlmadi. Sahifani yangila yoki qaytadan kir — javoblar shu qurilmada "
+"qoldi"
+
+#~ msgid "Часть В. Работа с возражениями"
+#~ msgstr "V qism. Eʼtirozlar bilan ishlash"
+
+#~ msgid "Как бы ты ответил клиенту?"
+#~ msgstr "Mijozga qanday javob berardin?"

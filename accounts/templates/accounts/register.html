@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Регистрация" %} — iBox{% endblock %}
+{% block content %}
+<div class="card mx-auto max-w-sm p-6 sm:p-8">
+    <h1 class="heading mb-1 text-xl font-semibold">
+        {% blocktrans with name=invitation.full_name %}Добро пожаловать, {{ name }}!{% endblocktrans %}
+    </h1>
+    <p class="muted mb-5 text-sm">{% trans "Придумай логин и пароль для входа в курс." %}</p>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {% for field in form %}
+        <div>
+            <label class="mb-1 block text-sm font-medium">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<p class="muted mt-1 text-xs">{{ field.help_text }}</p>{% endif %}
+            {% for error in field.errors %}<p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ error }}</p>{% endfor %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn-primary w-full">{% trans "Начать обучение" %}</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,342 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ibox-onboarding\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "Select record"
+msgstr "Выбрать запись"
+
+msgid "Select action"
+msgstr "Выберите действие"
+
+msgid "Collapse"
+msgstr "Свернуть"
+
+msgid "Name"
+msgstr "Название"
+
+msgid "Value"
+msgstr "Значение"
+
+msgid "Default"
+msgstr "По умолчанию"
+
+msgid "Code"
+msgstr "Код"
+
+msgid "Current file"
+msgstr "Текущий файл"
+
+msgid "Reset to default"
+msgstr "Сбросить"
+
+msgid "From"
+msgstr "От"
+
+msgid "To"
+msgstr "До"
+
+msgid "Date from"
+msgstr "Дата с"
+
+msgid "Date to"
+msgstr "Дата по"
+
+msgid "Not enough data."
+msgstr "Недостаточно данных."
+
+msgid "Add new item"
+msgstr "Добавить"
+
+msgid "Object permissions"
+msgstr "Права на объекты"
+
+msgid "Object"
+msgstr "Объект"
+
+msgid "Group"
+msgstr "Группа"
+
+msgid "Group permissions"
+msgstr "Права группы"
+
+msgid "Edit"
+msgstr "Изменить"
+
+msgid "Manage group"
+msgstr "Управление группой"
+
+msgid "User permissions"
+msgstr "Права пользователя"
+
+msgid "Manage user"
+msgstr "Управление пользователем"
+
+msgid "Submit"
+msgstr "Отправить"
+
+msgid "Line number"
+msgstr "Номер строки"
+
+msgid "Row"
+msgstr "Строка"
+
+msgid ""
+"Choose a date from the list below to revert to a previous version of this "
+"object"
+msgstr "Выберите дату из списка, чтобы вернуться к предыдущей версии объекта"
+
+msgid "This object doesn't have a change history."
+msgstr "У этого объекта нет истории изменений."
+
+msgid ""
+"Press the 'Revert' button below to revert to this version of the object."
+msgstr "Нажмите «Откатить» ниже, чтобы вернуться к этой версии объекта."
+
+msgid "Press the 'Change History' button below to edit the history."
+msgstr "Нажмите «История изменений» ниже, чтобы отредактировать историю."
+
+msgid "Changed by"
+msgstr "Кто изменил"
+
+msgid "Comment"
+msgstr "Комментарий"
+
+msgid "Change reason"
+msgstr "Причина изменения"
+
+msgid "Changes"
+msgstr "Изменения"
+
+msgid "Field"
+msgstr "Поле"
+
+msgid "Old value"
+msgstr "Старое значение"
+
+msgid "New value"
+msgstr "Новое значение"
+
+msgid "Revert"
+msgstr "Откатить"
+
+msgid "Change History"
+msgstr "История изменений"
+
+msgid "Select action to run"
+msgstr "Выберите действие"
+
+msgid "Run the selected action"
+msgstr "Выполнить выбранное действие"
+
+msgid "After you've created a user, you’ll be able to edit more user options."
+msgstr "После создания пользователя можно будет изменить остальные параметры."
+
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
+"related objects, but your account doesn't have permission to delete the "
+"following types of objects:"
+msgstr ""
+"Удаление %(object_name)s «%(escaped_object)s» приведёт к удалению связанных "
+"объектов, но у вашего аккаунта нет прав на удаление следующих типов "
+"объектов:"
+
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would require deleting the"
+" following protected related objects:"
+msgstr ""
+"Удаление %(object_name)s «%(escaped_object)s» потребует удаления следующих "
+"защищённых связанных объектов:"
+
+msgid ""
+"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
+"All of the following related items will be deleted:"
+msgstr ""
+"Вы уверены, что хотите удалить %(object_name)s «%(escaped_object)s»? Также "
+"будут удалены все связанные объекты:"
+
+msgid "Welcome back to"
+msgstr "Добро пожаловать в"
+
+msgid "Forgotten your password or username?"
+msgstr "Забыли пароль или логин?"
+
+msgid "Type to search"
+msgstr "Поиск"
+
+msgid "You have been successfully logged out from the administration"
+msgstr "Вы вышли из панели администратора"
+
+msgid "No data"
+msgstr "Нет данных"
+
+msgid "All applications"
+msgstr "Все разделы"
+
+msgid "True"
+msgstr "Да"
+
+msgid "False"
+msgstr "Нет"
+
+msgid "Apply Filters"
+msgstr "Применить фильтры"
+
+msgid "Filters"
+msgstr "Фильтры"
+
+msgid "Navigate"
+msgstr "Навигация"
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Recent searches"
+msgstr "Недавние поиски"
+
+msgid "Nothing matched your search"
+msgstr "Ничего не найдено"
+
+msgid ""
+"\n"
+"            Found <span class=\"font-medium text-important\">%(counter)s</span> result in %(time)s seconds\n"
+"        "
+msgid_plural ""
+"\n"
+"            Found <span class=\"font-medium text-important\">%(counter)s</span> results in %(time)s seconds\n"
+"        "
+msgstr[0] ""
+"\n"
+"            Найден <span class=\"font-medium text-important\">%(counter)s</span> результат за %(time)s сек.\n"
+"        "
+msgstr[1] ""
+"\n"
+"            Найдено <span class=\"font-medium text-important\">%(counter)s</span> результата за %(time)s сек.\n"
+"        "
+msgstr[2] ""
+"\n"
+"            Найдено <span class=\"font-medium text-important\">%(counter)s</span> результатов за %(time)s сек.\n"
+"        "
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Record picture"
+msgstr "Изображение записи"
+
+msgid "This item will be deleted."
+msgstr "Этот элемент будет удалён."
+
+msgid "Click to cancel"
+msgstr "Нажмите, чтобы отменить"
+
+msgid "No results found"
+msgstr "Ничего не найдено"
+
+msgid ""
+"This page yielded into no results. Create a new item or reset your filters."
+msgstr "Здесь пока ничего нет. Создайте запись или сбросьте фильтры."
+
+msgid "Reset filters"
+msgstr "Сбросить фильтры"
+
+msgid "Image preview"
+msgstr "Предпросмотр изображения"
+
+msgid "Click to download"
+msgstr "Нажмите, чтобы скачать"
+
+msgid "Go back"
+msgstr "Назад"
+
+msgid "Previous"
+msgstr "Назад"
+
+msgid "Next"
+msgstr "Вперёд"
+
+msgid "Search apps and models..."
+msgstr "Поиск по разделам..."
+
+msgid "Available shortcuts"
+msgstr "Горячие клавиши"
+
+msgid "Global shortcuts"
+msgstr "Общие"
+
+msgid "Open command tool"
+msgstr "Открыть поиск"
+
+msgid "Open shortcuts list"
+msgstr "Показать горячие клавиши"
+
+msgid "Toggle sidebar"
+msgstr "Показать/скрыть меню"
+
+msgid "Toggle dark/light mode"
+msgstr "Тёмная/светлая тема"
+
+msgid "Changelist shortcuts"
+msgstr "В списках"
+
+msgid "Toggle filter"
+msgstr "Показать/скрыть фильтры"
+
+msgid "Create new record"
+msgstr "Создать запись"
+
+msgid "Command tool shortcuts"
+msgstr "В поиске"
+
+msgid "Open selection"
+msgstr "Открыть выбранное"
+
+msgid "Open selection in new tab"
+msgstr "Открыть в новой вкладке"
+
+msgid "General"
+msgstr "Общие"
+
+msgid "Light"
+msgstr "Светлая"
+
+msgid "Dark"
+msgstr "Тёмная"
+
+msgid "System"
+msgstr "Как в системе"
+
+msgid "Return to site"
+msgstr "Вернуться на сайт"
+
+msgid "Choose file to upload"
+msgstr "Выберите файл"
+
+msgid "Toggle password visibility"
+msgstr "Показать/скрыть пароль"
+
+msgid "Add row"
+msgstr "Добавить строку"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Select currency"
+msgstr "Выберите валюту"
+
+msgid "%(n)s вопрос — нужно ответить правильно на все."
+msgid_plural "%(n)s вопросов — нужно ответить правильно на все."
+msgstr[0] "%(n)s вопрос — нужно ответить правильно на все."
+msgstr[1] "%(n)s вопроса — нужно ответить правильно на все."
+msgstr[2] "%(n)s вопросов — нужно ответить правильно на все."
+
+msgid "Серия: %(n)s день подряд"
+msgid_plural "Серия: %(n)s дней подряд"
+msgstr[0] "Серия: %(n)s день подряд"
+msgstr[1] "Серия: %(n)s дня подряд"
+msgstr[2] "Серия: %(n)s дней подряд"

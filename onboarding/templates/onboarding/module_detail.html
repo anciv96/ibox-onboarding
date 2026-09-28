@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+{% block title %}{{ module.l_title }} — iBox{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl">
+
+    {# ── Баннер модуля ─────────────────────────────────────────────── #}
+    <section class="mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 p-5 text-white shadow-sm dark:from-brand-700 dark:to-brand-900 sm:p-7">
+        <div class="flex items-center justify-between gap-3 text-sm">
+            <a href="{% url 'onboarding:dashboard' %}" class="text-brand-100 transition-colors hover:text-white">&larr; {% trans "К моему прогрессу" %}</a>
+            <span class="rounded-full bg-white/15 px-3 py-0.5 font-medium">
+                {% blocktrans with p=position t=total_count %}Модуль {{ p }} из {{ t }}{% endblocktrans %}
+            </span>
+        </div>
+        <h1 class="mt-4 text-2xl font-semibold sm:text-3xl">{{ module.l_title }}</h1>
+
+        {% if is_completed %}
+        <p class="mt-3 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-sm font-medium">
+            {% include "partials/icon.html" with name="medal" class="h-4 w-4" %} {% trans "Модуль пройден — материалы остаются доступными" %}
+        </p>
+        {% endif %}
+
+        {% if state.total %}
+        <div class="mt-5">
+            <div class="mb-1.5 flex items-baseline justify-between gap-3 text-sm">
+                <span class="font-medium">{% trans "Шаги обучения" %}</span>
+                <span id="steps-count" class="font-semibold">{{ state.done }} / {{ state.total }}</span>
+            </div>
+            <div class="h-2 w-full overflow-hidden rounded-full bg-white/25">
+                <div id="steps-bar" class="h-2 rounded-full bg-white transition-all"
+                     style="width: {% widthratio state.done state.total 100 %}%"></div>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+
+    {# ── Путь из шагов ─────────────────────────────────────────────── #}
+    <div id="steps-root" class="space-y-3"
+         data-msg-saving="{% trans 'Сохраняем…' %}"
+         data-msg-saved="{% trans 'Сохранено' %}"
+         data-msg-failed="{% trans 'Не удалось сохранить. Обнови страницу и попробуй ещё раз' %}"
+         data-msg-offline="{% trans 'Нет связи — попробуй ещё раз, когда интернет вернётся' %}"
+         data-msg-note-required="{% trans 'Напиши короткую заметку — без неё шаг не засчитается' %}"
+         data-msg-rankup="{% trans 'Новый ранг:' %}">
+        {% csrf_token %}
+
+        {% for row in state.rows %}
+        {% with step=row.step %}
+        <article class="group scroll-mt-4 rounded-2xl border border-gray-200 bg-white shadow-sm transition-all data-[state=current]:border-brand-500 data-[state=current]:shadow-md data-[state=current]:ring-2 data-[state=current]:ring-brand-500/20 data-[state=done]:border-green-200 data-[state=upcoming]:opacity-70 data-[state=upcoming]:hover:opacity-100 dark:border-gray-800 dark:bg-gray-900 dark:data-[state=current]:border-brand-400 dark:data-[state=current]:ring-brand-400/20 dark:data-[state=done]:border-green-900"
+                 data-step data-state="{{ row.state }}" data-open="{% if row.state == 'current' %}1{% else %}0{% endif %}"
+                 data-done="{{ row.done|yesno:'1,0' }}" data-requires-note="{{ step.needs_note|yesno:'1,0' }}"
+                 data-url="{% url 'onboarding:module_step' module.pk step.pk %}">
+            <div class="flex items-center gap-3 p-3 sm:gap-4 sm:p-4">
+                <button type="button" data-expand aria-expanded="{% if row.state == 'current' %}true{% else %}false{% endif %}"
+                        class="flex min-w-0 flex-1 items-center gap-3 rounded-xl text-left sm:gap-4">
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-200 text-base font-semibold text-gray-500 transition-colors group-data-[state=current]:bg-brand-600 group-data-[state=current]:text-white group-data-[state=current]:ring-4 group-data-[state=current]:ring-brand-100 group-data-[state=done]:bg-green-600 group-data-[state=done]:text-white dark:bg-gray-800 dark:text-gray-400 dark:group-data-[state=current]:bg-brand-500 dark:group-data-[state=current]:ring-brand-900/60 dark:group-data-[state=done]:bg-green-600">
+                        <span class="group-data-[state=done]:hidden">{{ forloop.counter }}</span>
+                        <span class="hidden group-data-[state=done]:inline-flex">{% include "partials/icon.html" with name="check" class="h-5 w-5" %}</span>
+                    </span>
+                    <span class="min-w-0 flex-1">
+                        <span class="heading block text-base font-semibold group-data-[state=done]:text-gray-600 group-data-[state=upcoming]:text-gray-600 dark:group-data-[state=done]:text-gray-400 dark:group-data-[state=upcoming]:text-gray-300 sm:text-lg">{{ step.l_title }}</span>
+                        {% if not step.is_required %}<span class="muted block text-xs">{% trans "по желанию" %}</span>{% endif %}
+                    </span>
+                    <span class="text-gray-400 transition-transform group-data-[open=1]:rotate-180">{% include "partials/icon.html" with name="chevron" class="h-5 w-5" %}</span>
+                </button>
+
+                <button type="button" data-toggle aria-pressed="{{ row.done|yesno:'true,false' }}"
+                        data-label-todo="{{ step.todo_label }}" data-label-done="{{ step.done_label }}"
+                        title="{% if row.done %}{{ step.done_label }}{% else %}{{ step.todo_label }}{% endif %}"
+                        aria-label="{% if row.done %}{{ step.done_label }}{% else %}{{ step.todo_label }}{% endif %}"
+                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-gray-300 text-transparent transition-colors hover:border-green-500 hover:text-green-500/50 disabled:opacity-60 group-data-[done=1]:border-green-600 group-data-[done=1]:bg-green-600 group-data-[done=1]:text-white group-data-[done=1]:hover:text-white dark:border-gray-600 dark:group-data-[done=1]:border-green-600">
+                    {% include "partials/icon.html" with name="check" class="h-5 w-5" %}
+                </button>
+            </div>
+
+            <div data-body class="space-y-4 border-t border-gray-100 px-4 pb-4 pt-4 group-data-[open=0]:hidden dark:border-gray-800 sm:px-5 sm:pb-5">
+                {% if step.kind == 'video' and step.l_youtube_id %}
+                <div class="aspect-video overflow-hidden rounded-xl bg-black">
+                    <iframe class="h-full w-full" src="https://www.youtube.com/embed/{{ step.l_youtube_id }}"
+                            title="{{ step.l_title }}" frameborder="0" allowfullscreen></iframe>
+                </div>
+                {% endif %}
+
+                {% if step.body %}
+                <div class="prose prose-sm max-w-none dark:prose-invert sm:prose-base prose-headings:font-semibold prose-a:text-brand-600 dark:prose-a:text-brand-400">
+                    {{ step.l_body_html|safe }}
+                </div>
+                {% endif %}
+
+                {% if step.kind == 'resource' and step.url %}
+                <a href="{{ step.url }}" target="_blank" rel="noopener noreferrer" class="btn-secondary !py-2 text-sm">
+                    {% trans "Открыть" %} {% include "partials/icon.html" with name="link" class="h-4 w-4" %}
+                </a>
+                {% endif %}
+
+                {% if step.kind == 'action' %}
+                <textarea data-note rows="2" maxlength="2000" placeholder="{% trans 'Что сделал и что понял…' %}"
+                          aria-label="{% trans 'Твоя заметка' %}"
+                          class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100 dark:placeholder-gray-500">{{ row.note }}</textarea>
+                {% endif %}
+
+                <p data-step-status aria-live="polite" class="-mt-1 text-xs text-gray-400 empty:hidden data-[state=failed]:text-red-600 data-[state=offline]:text-amber-600 data-[state=warn]:text-amber-700 data-[state=saved]:text-green-600 dark:data-[state=saved]:text-green-400 dark:data-[state=warn]:text-amber-400"></p>
+            </div>
+        </article>
+        {% endwith %}
+        {% empty %}
+        <div class="card p-5 text-sm muted">{% trans "Материалы для этого модуля ещё не добавлены." %}</div>
+        {% endfor %}
+    </div>
+
+    {# ── Переход к проверке знаний ─────────────────────────────────── #}
+    <section class="card mt-8 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h2 class="heading text-lg font-semibold">{% trans "Проверка знаний" %}</h2>
+            <p class="muted text-sm">
+                {% blocktrans count n=module.questions.count %}{{ n }} вопрос — нужно ответить правильно на все.{% plural %}{{ n }} вопросов — нужно ответить правильно на все.{% endblocktrans %}
+            </p>
+        </div>
+        <div>
+            <a href="{% url 'onboarding:module_quiz' module.pk %}" data-quiz-ready
+               class="btn-primary w-full sm:w-auto {% if not state.quiz_ready %}hidden{% endif %}">
+                {% if is_completed %}{% trans "Пройти тест ещё раз" %}{% else %}{% trans "Проверить знания" %}{% endif %}
+                {% include "partials/icon.html" with name="arrow" class="h-4 w-4" %}
+            </a>
+            <div data-quiz-locked class="{% if state.quiz_ready %}hidden{% endif %}">
+                <button type="button" disabled class="btn-secondary w-full cursor-not-allowed opacity-60 sm:w-auto">{% include "partials/icon.html" with name="lock" class="h-4 w-4" %} {% trans "Проверить знания" %}</button>
+                <p class="muted mt-1.5 text-xs">{% trans "Осталось обязательных шагов:" %} <span data-required-left class="heading font-semibold">{{ state.required_left }}</span></p>
+            </div>
+        </div>
+    </section>
+
+    <nav class="mt-8 flex items-center justify-between gap-4 border-t border-gray-200 pt-6 text-sm font-medium dark:border-gray-800">
+        {% if prev_module %}
+        <a href="{% url 'onboarding:module_detail' prev_module.pk %}" class="link">&larr; {{ prev_module.l_title }}</a>
+        {% else %}<span></span>{% endif %}
+        {% if next_module and is_completed %}
+        <a href="{% url 'onboarding:module_detail' next_module.pk %}" class="link text-right">{{ next_module.l_title }} &rarr;</a>
+        {% endif %}
+    </nav>
+</div>
+
+<script src="{% static 'js/steps.js' %}"></script>
+<script>initSteps(document.getElementById('steps-root'));</script>
+{% endblock %}

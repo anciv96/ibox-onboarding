@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+  .card { @apply rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900; }
+  .card-inset { @apply rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-950/60; }
+  .btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-3 font-medium text-white transition-colors hover:bg-brand-700 dark:bg-brand-500 dark:hover:bg-brand-400; }
+  .btn-light { @apply inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 font-medium text-brand-700 transition-colors hover:bg-brand-50; }
+  .btn-secondary { @apply inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 px-5 py-3 font-medium text-gray-800 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:text-gray-100 dark:hover:bg-gray-800; }
+  .link { @apply text-brand-600 hover:underline dark:text-brand-400; }
+  .muted { @apply text-gray-500 dark:text-gray-400; }
+  .heading { @apply text-gray-900 dark:text-white; }
+  .option { @apply flex cursor-pointer items-start gap-3 rounded-lg px-3 py-2.5 -mx-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800/60; }
+}
+html.dark { color-scheme: dark; }

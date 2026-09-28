@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Тренировка" %} — iBox{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl">
+    <div class="mb-4 flex items-center justify-between gap-3 text-sm">
+        <a href="{% url 'practice:lobby' %}" class="link">&larr; {% trans "В лобби" %}</a>
+        <span class="muted">{% blocktrans with p=position t=total %}Вопрос {{ p }} из {{ t }}{% endblocktrans %} · <span class="heading font-semibold">{{ correct_count }}</span> {% trans "верно" %}</span>
+    </div>
+    <div class="mb-5 h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-800" role="progressbar" aria-valuemin="0" aria-valuemax="{{ total }}" aria-valuenow="{{ position }}">
+        <div class="h-2 rounded-full bg-brand-600 transition-all dark:bg-brand-400" style="width: {% widthratio position total 100 %}%"></div>
+    </div>
+
+    <section class="card p-5 sm:p-6">
+        <span class="inline-block rounded-full bg-brand-50 px-3 py-0.5 text-xs font-semibold text-brand-700 dark:bg-brand-900/40 dark:text-brand-100">{{ category_label }}</span>
+        <h1 class="heading mt-3 text-lg font-semibold leading-snug sm:text-xl">{{ question.l_prompt }}</h1>
+
+        <form method="post" action="{% url 'practice:play' %}" class="mt-5 {% if is_myth %}grid gap-3 sm:grid-cols-2{% else %}space-y-2.5{% endif %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="answer">
+            {% for option in options %}
+            <button type="submit" name="option" value="{{ option.id }}" {% if feedback %}disabled{% endif %}
+                    class="flex w-full items-start gap-3 rounded-xl border-2 px-4 py-3 text-left text-sm transition-colors sm:text-base
+                           {% if feedback %}
+                               {% if option.is_correct %}border-green-500 bg-green-50 text-green-900 dark:border-green-600 dark:bg-green-950/40 dark:text-green-100
+                               {% elif option.id == feedback.chosen_id %}border-red-400 bg-red-50 text-red-900 dark:border-red-700 dark:bg-red-950/40 dark:text-red-100
+                               {% else %}border-gray-200 text-gray-500 opacity-70 dark:border-gray-800 dark:text-gray-400{% endif %}
+                           {% else %}border-gray-200 hover:border-brand-500 hover:bg-brand-50 dark:border-gray-700 dark:hover:border-brand-400 dark:hover:bg-brand-900/20{% endif %}
+                           {% if is_myth %}justify-center text-center text-base font-semibold sm:text-lg{% endif %}">
+                {% if feedback %}
+                    {% if option.is_correct %}{% include "partials/icon.html" with name="check" class="mt-0.5 h-5 w-5 shrink-0" %}
+                    {% elif option.id == feedback.chosen_id %}{% include "partials/icon.html" with name="x" class="mt-0.5 h-5 w-5 shrink-0" %}{% endif %}
+                {% endif %}
+                <span>{{ option.l_text }}</span>
+            </button>
+            {% endfor %}
+        </form>
+
+        {% if feedback %}
+        <div class="mt-5 rounded-xl border px-4 py-3 text-sm {% if feedback.is_correct %}border-green-200 bg-green-50 text-green-900 dark:border-green-900 dark:bg-green-950/40 dark:text-green-100{% else %}border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-100{% endif %}">
+            <p class="font-semibold">{% if feedback.is_correct %}{% trans "Верно!" %}{% else %}{% trans "Не совсем." %}{% endif %}</p>
+            {% if question.l_explanation %}<p class="mt-1">{{ question.l_explanation }}</p>{% endif %}
+        </div>
+        <form method="post" action="{% url 'practice:play' %}" class="mt-4">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="next">
+            <button type="submit" class="btn-primary w-full sm:w-auto" autofocus>
+                {% if is_last %}{% trans "Итоги раунда" %}{% else %}{% trans "Дальше" %}{% endif %} {% include "partials/icon.html" with name="arrow" class="h-4 w-4" %}
+            </button>
+        </form>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
